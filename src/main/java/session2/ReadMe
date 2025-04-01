@@ -1,0 +1,48 @@
+Tests can be enabled one at a time using TestNG annotations to execute HTTP POST methods using different methods.
+JSON payload(students) used here is a custom payload hosted using json-server.
+
+Create your own json
+	- download and install nodejs
+	- set environment variables for nodejs and nodejs/nodemodules
+	- check the versions
+	- node -v & npm -v
+	- install json-server
+		○  npm install -g json-server
+	- Create sample json file with below data.
+	{
+	        "students": [
+	                {
+	                        "id": 1,
+	                        "name": "John",
+	                        "location": "India",
+	                        "phone": "1234567890",
+	                        "courses": [
+	                                "Java",
+	                                "Selenium"
+	                        ]
+	                },
+	                {
+	                        "id": 2,
+	                        "name": "Kim",
+	                        "location": "US",
+	                        "phone": "98876543213",
+	                        "courses": [
+	                                "Python",
+	                                "Appium"
+	                        ]
+	                },
+	                {
+	                        "id": 3,
+	                        "name": "Smith",
+	                        "location": "Canada",
+	                        "phone": "165498765",
+	                        "courses": [
+	                                "C#",
+	                                "RestAPI"
+	                        ]
+	                }
+	        ]
+	}
+	- Execute the below cmd to start your server
+		○ json-server students.json
+	- Exposed endpoint would be - http://localhost:3000/students
