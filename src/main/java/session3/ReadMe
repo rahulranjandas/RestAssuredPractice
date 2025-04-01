@@ -1,0 +1,27 @@
+Path and Query parameters
+--------------------------
+- PathAndQueryParameters class is for identifying how to pass the path and query parameters in given and when conditions.
+- One can pass multiple Query parameters and Path parameters in the endpoint
+* Refer - PathAndQueryParameters.java
+
+Cookies
+--------
+- Capture the API response in Response object using GET method.
+- Adding validations on cookies because cookies are generally dynamic in nature. Validation such as isExists can be added.
+- One cannot hardcode the cookies. If cookies are hardcoded, it fails.
+java.lang.AssertionError: 1 expectation failed.
+Expected cookie "AEC" was not "AVcja2eoeqclvEASepd2WRnwVnC-XYftzmHivqa-pRzv2cb0d74hajFxZTA", was "AVcja2fYw9faSKfjYjhrrpZHZ-MTtSXF3qLDA5LGhiiBQe8ySJvoCy0zCA".
+- One can extract a single cookie or multiple cookies.
+- response.getCookies() - returns cookies as a map.
+* Recommended approach: Capture multiple cookies that are dynamic and iterate through using the keyset of the map.
+* Refer - CookiesDemo.java
+
+
+Headers
+--------
+- Adding .and() improves readability and implies chaining of multiple assertions. .and() does not add any functionality.
+- response.getHeaders() returns all Headers that are of type Headers.
+* Recommended approach: log all the headers using then().log().headers(); instead of log().all(); to print all the response headers.
+    -log response body - then().log().body();
+    -log response cookies - then().log().cookies();
+* Refer - HeadersDemo.java and LoggingDemo.java

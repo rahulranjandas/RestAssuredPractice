@@ -1,8 +1,10 @@
 - Tests can be enabled one at a time using TestNG annotations to execute HTTP POST methods using different methods.
 - JSON payload(students) used here is a custom payload hosted using json-server.
 - New dependency added gson.json for creating a source JSON payload.
+* Refer DifferentWaysToCreatePostRequestBody.java
 
-- Create your own json
+Create your own json
+---------------------
 	- download and install nodejs
 	- set environment variables for nodejs and nodejs/nodemodules
 	- check the versions
