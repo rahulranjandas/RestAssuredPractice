@@ -6,7 +6,7 @@ Path and Query parameters
 
 Cookies
 --------
-- Capture the API response in Response object using GET method.
+- Capture the API response in Response interface using GET method.
 - Adding validations on cookies because cookies are generally dynamic in nature. Validation such as isExists can be added.
 - One cannot hardcode the cookies. If cookies are hardcoded, it fails.
 java.lang.AssertionError: 1 expectation failed.
