@@ -40,7 +40,10 @@ Running a local API
 	]
 }
 
-- Access using [3].title for the title - "The Lord of the Rings"
+Parsing the Response JSON
+--------------------------
+- Directly Access using [3].title for the title - "The Lord of the Rings
+- Parse JSON format data using the Response Interface.
 - Another approach for extracting the titles - use .getList() and store it in a list. Now iterate and match the pattern of the title, if found display it.
 - Another approach for extracting the titles - use streams.
         titles.stream()
