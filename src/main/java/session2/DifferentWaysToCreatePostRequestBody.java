@@ -1,11 +1,15 @@
 package session2;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,23 +26,25 @@ import static org.hamcrest.Matchers.equalTo;
 	- using org.json
 	- using POJO class (Plain Old Java Object)
     - using external json file
+    - using Jackson library with an external json file
     */
 
 
 public class DifferentWaysToCreatePostRequestBody {
 
     public static String userId;
+    public static String location;
     public static String URL = "http://localhost:3000/students";
     public boolean flag = false;
 
     //    Method-1 using Hashmap
     @Test(enabled = false)
     public void usingHashmap() {
-        HashMap payload = new HashMap<>();
+        HashMap<Object, Object> payload = new HashMap<>();
         payload.put("name", "Scott");
         payload.put("location", "France");
         payload.put("phone", "9873461991");
-        String coursesArr[] = {"C", "C++"};
+        String[] coursesArr = {"C", "C++"};
         payload.put("courses", coursesArr);
 
         Response response = given().contentType("application/json").body(payload)
@@ -119,13 +125,13 @@ public class DifferentWaysToCreatePostRequestBody {
 
 
     //    Method - 4 Using External JSON files
-    @Test(priority = 0)
+    @Test(priority = 0, enabled = false)
     public void usingExternalJSONFiles() throws IOException {
 
 
         String jsonFilePath = ".\\requestPayload.json";
 //        String jsonData = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
-        String jsonData = new String(Files.readString(Paths.get(jsonFilePath)));
+        String jsonData = Files.readString(Paths.get(jsonFilePath));
 
         Response response = given().contentType("application/json").body(jsonData)
                 .when().post(URL)
@@ -143,11 +149,48 @@ public class DifferentWaysToCreatePostRequestBody {
         flag = true;
     }
 
+    //    Method - 5 Using Jackson library and external JSON file
+    @Test(enabled = false)
+    public void readUsingJackson() throws IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(new File("C:\\Users\\RAHUL RANJAN DAS\\OFSA-DIH\\RestAssuredPractice\\requestPayload.json"));
+        Response response = given().contentType(ContentType.JSON).body(root)
+                .when().post(URL).then().extract().response();
+
+        JsonPath jsonPath = new JsonPath(response.asString());
+        userId = jsonPath.getString("id");
+        location = jsonPath.getString("location");
+        System.out.println("User Id: " + userId);
+        System.out.println("User location: " + location);
+        System.out.println("First Course: " + jsonPath.getString("courses[0]"));
+        flag = true;
+    }
+
+    //    Method - 6 Using Jackson library and
+    @Test
+    public void readUsingJacksonLib() throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        RequestPayloadPOJO jsonData = objectMapper.readValue(new File("C:\\Users\\RAHUL RANJAN DAS\\OFSA-DIH\\RestAssuredPractice\\requestPayload.json"), RequestPayloadPOJO.class);
+        Response response = given().contentType(ContentType.JSON).body(jsonData)
+                .when().post(URL).then().extract().response();
+
+        JsonPath jsonPath = new JsonPath(response.asString());
+        System.out.println(response.asString());
+        userId = jsonPath.getString("id");
+        location = jsonPath.getString("location");
+        System.out.println("User Id: " + userId);
+        System.out.println("User location: " + location);
+        System.out.println("First Course: " + jsonPath.getString("courses[0]"));
+        System.out.println("Second Course: " + jsonPath.getString("courses[1]"));
+        flag = true;
+    }
 
     @Test(priority = 1)
     public void deleteUser() {
 
-        if (flag == true) {
+        if (flag) {
             given().log().all().baseUri(URL).pathParam("userID", userId)
                     .when().delete("{userID}")
                     .then().log().all()

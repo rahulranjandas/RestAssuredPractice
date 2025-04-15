@@ -1,4 +1,11 @@
 - Tests can be enabled one at a time using TestNG annotations to execute HTTP POST methods using different methods.
+- Methods
+	○ Using Hashmap<object, object> object as body
+	○ Using an object of JSONObject of Gson library
+	○ Using an object of POJO class of Java
+	○ Using external files by reading as Files.readAllBytes() or Files.readString()
+	○ Using Jackson library to read JSON file from LFS/classpath
+	○ Using Jackson library & POJO class of Java
 - JSON payload(students) used here is a custom payload hosted using json-server.
 - New dependency added gson.json for creating a source JSON payload.
 * Refer DifferentWaysToCreatePostRequestBody.java
