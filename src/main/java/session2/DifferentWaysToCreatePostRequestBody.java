@@ -149,7 +149,7 @@ public class DifferentWaysToCreatePostRequestBody {
         flag = true;
     }
 
-    //    Method - 5 Using Jackson library and external JSON file
+    //    Method - 5 Using Jackson library and external JSON file without using POJO
     @Test(enabled = false)
     public void readUsingJackson() throws IOException {
 
@@ -167,7 +167,7 @@ public class DifferentWaysToCreatePostRequestBody {
         flag = true;
     }
 
-    //    Method - 6 Using Jackson library and
+    //    Method - 6 Using Jackson library and external JSON file using POJO
     @Test
     public void readUsingJacksonLib() throws IOException {
 
